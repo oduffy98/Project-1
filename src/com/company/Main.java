@@ -1,13 +1,12 @@
 package com.company;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Boolean;
 import java.io.*;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
 
 
 public class Main {
@@ -16,6 +15,9 @@ public class Main {
         String userInput = "blah";
         File inFile = new File("WareHouseDB.txt");
         Scanner sc = new Scanner(inFile);
+        Comparator<BikePart> sortbyName = comparing(BikePart::getPartName);
+        Comparator<BikePart> sortbyNumber = comparing(BikePart::getPartNum);
+
         while (sc.hasNextLine()) {
             String newEntry = sc.next();
             String[] newObj = newEntry.split(",");
@@ -82,25 +84,13 @@ public class Main {
                 parts.print();
                 System.out.println();
             } else if ((userInput.equals("SortName") || userInput.equals("sortname"))) {
-                Comparator<BikePart> compareByName = new Comparator<BikePart>() {
-                    @Override
-                    public int compare(BikePart o1, BikePart o2) {
-                        return o1.getPartName().compareTo(o2.getPartName());
-                    }
-                };
                 ArrayList<BikePart> sortList = parts.getInventory();
-                Collections.sort(sortList, compareByName);
-                System.out.print(sortList);
+                sortList.sort(Comparator.comparing(BikePart::getPartName, String.CASE_INSENSITIVE_ORDER));
+                parts.print();
             } else if ((userInput.equals("SortNumber")) || (userInput.equals("sortnumber") || (userInput.equals("sortNumber")))) {
-                Comparator<BikePart> compareByNumber = new Comparator<BikePart>() {
-                    @Override
-                    public int compare(BikePart o1, BikePart o2) {
-                        return o1.getPartNum().compareTo(o2.getPartNum());
-                    }
-                };
                 ArrayList<BikePart> sortList = parts.getInventory();
-                Collections.sort(sortList, compareByNumber);
-                System.out.print(sortList);
+                sortList.sort(Comparator.comparing(BikePart::getPartNum));
+                parts.print();
             }
 
         }
