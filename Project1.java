@@ -52,7 +52,25 @@ public class Project1 {
                     parts.checkPart(bpName);
                 }
                 input.close();
-            }
+            } else if ((userInput.equals("Sell") || userInput.equals("sell"))){
+                System.out.println("Enter the part number: ");
+                int number = input.nextInt();
+                ArrayList <BikePart> array = parts.getInventory();
+                for (BikePart part : array){
+                    if (part.getPartNum().equals(number)){
+                     parts.sellPart(part);
+                     parts.displayPart(part);
+                    }
+                }
+            }else if ((userInput.equals("Display") || userInput.equals("display"))){
+                System.out.println("Enter the part number: ");
+                int number = input.nextInt();
+                ArrayList <BikePart> array = parts.getInventory();
+                for (BikePart part : array){
+                    if (part.getPartNum().equals(number)){
+                        parts.displayPart(part);
+                    }
+                }
         }
     }
 }
