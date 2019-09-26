@@ -3,6 +3,9 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;;
+
 /**
  * This class satisfies the Project 1 requirements for CPSC 240.
  * @author Kelly Donaghey
@@ -16,6 +19,7 @@ public class BikePart{
     private double salesPrice;
     private boolean onSale;
     private int quantity;
+
 
     @Override
     public String toString(){
