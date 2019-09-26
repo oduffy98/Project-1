@@ -27,7 +27,7 @@ public class Project1 {
         fileIn.close();
 
         Scanner input = new Scanner(System.in);
-        while((input != "quit") || (input != "Quit") || (input != "QUIT")){
+        while(!(input.equals("quit") || input.equals("Quit") || input.equals("QUIT"))){
             System.out.println("Please select your option from the following menu:");
             System.out.println("Read: Read an inventory delivery file");
             System.out.println("Enter: Enter a part");
@@ -37,7 +37,7 @@ public class Project1 {
             System.out.println("Quit");
             System.out.println("Enter your choice: ");
             input = in.next();
-            if((input == "Read") || (input == "read")){
+            if((input.equals("Read") || (input.equals("read")){
                 System.out.println("Please enter the name of the delivery file: ")
                 File readFile = new File(in.next());
                 while(readFile.hasNextLine()){
