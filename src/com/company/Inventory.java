@@ -95,16 +95,5 @@ public class Inventory {
         }
     }
 
-    public void writeToFile(){
-        int counter = 0;
-        try {
-            PrintWriter writer = new PrintWriter("WarehouseDB.txt");
-            writer.println();
-        }
-        catch(FileNotFoundException e){
-
-        }
-
-    }
 
 }
