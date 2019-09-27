@@ -1,14 +1,8 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.naturalOrder;;
-
 /**
  * This class satisfies the Project 1 requirements for CPSC 240.
- * @author Kelly Donaghey
+ * @author Kelly Donaghey, Olivia Duffy, Keshyra Smith
  * @version 2019/09/21
  */
 
@@ -19,12 +13,6 @@ public class BikePart{
     private double salesPrice;
     private boolean onSale;
     private int quantity;
-
-
-    @Override
-    public String toString(){
-        return String.format("%s%s%d%s%.2f%s%.2f%s%b%s%d",partName ,",",partNum ,",",price,",",salesPrice,",",onSale,",",quantity);
-    }
 
     /**
      * Constructor for objects of class BikePart
@@ -48,7 +36,7 @@ public class BikePart{
 
     /**
      * Method changes name of the object.
-     * @param name
+     * @param name the name of the object
      */
     public void setPartName(String name){
         this.partName = name;
@@ -64,7 +52,7 @@ public class BikePart{
 
     /**
      * Method changes the identification number.
-     * @param newNum
+     * @param newNum the new part identification number
      */
     public void setPartNum(int newNum) {
         this.partNum = newNum;
@@ -80,7 +68,7 @@ public class BikePart{
 
     /**
      * Method changes the price of the part.
-     * @param newPrice
+     * @param newPrice the new price of the part
      */
     public void setPrice(double newPrice) {
         this.price = newPrice;
@@ -96,7 +84,7 @@ public class BikePart{
 
     /**
      * Method changes sales price.
-     * @param newSalesPrice
+     * @param newSalesPrice the new price of the part when it is on sale
      */
     public void setSalesPrice(double newSalesPrice) {
         this.salesPrice = newSalesPrice;
@@ -104,7 +92,7 @@ public class BikePart{
 
     /**
      * Method checks if the part is on sale.
-     * @return boolean;
+     * @return boolean
      */
     public boolean isOnSale(){
         return this.onSale;
@@ -112,7 +100,7 @@ public class BikePart{
 
     /**
      * Method changes sales status of object.
-     * @param onSale
+     * @param onSale if the item is on sale or not
      */
     public void setOnSale(boolean onSale) {
         this.onSale = onSale;
@@ -126,7 +114,13 @@ public class BikePart{
 
     /**
      * Method changes part quantity
-     * @param quantity
+     * @param quantity the number of parts that exist in inventory
      */
     public void setQuantity(int quantity){this.quantity = quantity;}
+
+    @Override
+    public String toString(){
+        return String.format("%s%s%d%s%.2f%s%.2f%s%b%s%d",partName ,",",partNum ,",",price,",",salesPrice,",",onSale,",",quantity);
+    }
+
 }
