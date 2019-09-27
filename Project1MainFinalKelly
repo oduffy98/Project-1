@@ -104,6 +104,9 @@ public class Project1 {
                     if (part.getPartName().equals(name)) {
                         parts.displayPart(part);
                     }
+                    else{
+                        System.out.println("Sorry. We do not have this part in our inventory.");
+                    }
                 }
             }
             else if ((user.equals("SortName")) || (user.equals("sortname")) || (user.equals("SORTNAME"))) {
