@@ -1,0 +1,130 @@
+import java.util.Comparator;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.lang.Double;
+import java.lang.Integer;
+import java.lang.Boolean;
+import java.io.*;
+import java.time.*;
+
+public class Project1 {
+    public static void main(String[] args) throws IOException {
+        Inventory parts = new Inventory();
+        File inFile = new File("warehouseDB.txt");
+        Scanner sc = new Scanner(inFile);
+        LocalDateTime now = LocalDateTime.now();
+
+        while (sc.hasNextLine()) {
+            String newEntry = sc.next();
+            String[] newObj = newEntry.split(",");
+            String n = newObj[0];
+            int id = Integer.parseInt(newObj[1]);
+            double p = Double.parseDouble(newObj[2]);
+            double sp = Double.parseDouble(newObj[3]);
+            boolean s = Boolean.parseBoolean(newObj[4]);
+            int q = Integer.parseInt(newObj[5]);
+            BikePart bpName = new BikePart(n, id, p, sp, s, q);
+            parts.addPart(bpName);
+        }
+        sc.close();
+
+        Scanner input = new Scanner(System.in);
+        String user = input.next();
+        while (!(user.equals("quit")) && !(user.equals("Quit")) && !(user.equals("QUIT"))) {
+            System.out.println("Please select your option from the following menu:");
+            System.out.println("Read: Read an inventory delivery file");
+            System.out.println("Enter: Enter a part");
+            System.out.println("Display: Display a part");
+            System.out.println("SortName: Sort parts by part name");
+            System.out.println("SortNumber: Sort parts by part number");
+            System.out.println("Quit");
+            System.out.println("Enter your choice: ");
+
+            if (!(user.equals("Read") || user.equals("read") || user.equals("READ")
+                    || user.equals("Enter") || user.equals("enter") || user.equals("ENTER")
+                    || user.equals("Display") || user.equals("display") || user.equals("DISPLAY")
+                    || user.equals("SortName") || user.equals("sortname") || user.equals("SORTNAME")
+                    || user.equals("SortNumber") || user.equals("sortnumber") || user.equals("SORTNUMBER")
+                    || user.equals("quit") || user.equals("Quit") || user.equals("QUIT"))) {
+                throw new IOException("Sorry. That's not a valid choice.");
+            }
+
+            if ((user.equals("Read")) || (user.equals("read")) || (user.equals("READ"))) {
+                System.out.println("Please enter the name of the delivery file: ");
+                File file = new File(input.next());
+                Scanner fileRead = new Scanner(file);
+                while (fileRead.hasNextLine()) {
+                    String newEntry = fileRead.next();
+                    String[] newObj = newEntry.split(",");
+                    String n = newObj[0];
+                    int id = Integer.parseInt(newObj[1]);
+                    double p = Double.parseDouble(newObj[2]);
+                    double sp = Double.parseDouble(newObj[3]);
+                    boolean s = Boolean.parseBoolean(newObj[4]);
+                    int q = Integer.parseInt(newObj[5]);
+                    BikePart bpName = new BikePart(n, id, p, sp, s, q);
+                    parts.addPart(bpName);
+                }
+                fileRead.close();
+                input.close();
+            }
+            else if ((user.equals("Enter")) || (user.equals("ENTER")) || (user.equals("enter"))) {
+                System.out.println("Please enter the part name, part number, price, sales price, and if the item is on sale, and the quantity");
+                input.useDelimiter(",|\r|\n");
+                String partName = input.next();
+                int partNumber = input.nextInt();
+                double price = input.nextDouble();
+                double salesPrice = input.nextDouble();
+                boolean onSale = input.nextBoolean();
+                int quantity = input.nextInt();
+                BikePart bP = new BikePart(partName, partNumber, price, salesPrice, onSale, quantity);
+                String add = parts.checkPart(bP);
+                if (!add.equals("true")) {
+                    parts.addPart(bP);
+                }
+                parts.print();
+                System.out.println();
+            }
+            else if ((user.equals("Sell") || user.equals("sell")) || (user.equals("SELL"))) {
+                System.out.println("Enter the part number: ");
+                int number = input.nextInt();
+                ArrayList<BikePart> array = parts.getInventory();
+                for (BikePart part : array) {
+                    if (part.getPartNum() == number){
+                        parts.sellPart(part);
+                        parts.sellDisplayPart(part);
+                    }
+                }
+            }
+            else if ((user.equals("Display")) || (user.equals("display")) || (user.equals("DISPLAY"))) {
+                System.out.println("Enter the part name: ");
+                String name = input.next();
+                ArrayList<BikePart> array = parts.getInventory();
+                for (BikePart part : array) {
+                    if (part.getPartName().equals(name)) {
+                        parts.displayPart(part);
+                    }
+                }
+            }
+            else if ((user.equals("SortName")) || (user.equals("sortname")) || (user.equals("SORTNAME"))) {
+                ArrayList<BikePart> sortList = parts.getInventory();
+                sortList.sort(Comparator.comparing(BikePart::getPartName, String.CASE_INSENSITIVE_ORDER));
+                parts.print();
+            }
+            else if ((user.equals("SortNumber")) || (user.equals("sortnumber")) || (user.equals("SORTNUMBER"))) {
+                ArrayList<BikePart> sortList = parts.getInventory();
+                sortList.sort(Comparator.comparing(BikePart::getPartNum));
+                parts.print();
+            }
+        }
+        FileWriter fileWriter = new FileWriter("wareHouseDB.txt", false);
+        PrintWriter writer = new PrintWriter(fileWriter);
+        int counter = 0;
+        ArrayList<BikePart> partsToSave = parts.getInventory();
+        while (counter < partsToSave.size()) {
+            writer.println(partsToSave.get(counter).toString());
+            ++counter;
+        }
+        writer.close();
+    }
+}
