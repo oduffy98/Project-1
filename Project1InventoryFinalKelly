@@ -1,0 +1,116 @@
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+
+/**
+ * This class satisfies the Project 1 requirements for CPSC 240.
+ * @author Kelly Donaghey, Olivia Duffy, Keshyra Smith
+ * @version 2019/09/27
+ */
+
+public class Inventory {
+    private ArrayList<BikePart> partsList;
+
+    /**
+     * Constructor for objects of class Inventory.
+     */
+    public Inventory(){
+        partsList = new ArrayList<>();
+}
+
+    /**
+     * Method adds a BikePart object to partsList.
+     * @param bikeItem
+     */
+    public void addPart(BikePart bikeItem){partsList.add(bikeItem);}
+
+    /**
+     * This method verifies if the BikePart object is already in partsList. If not, it adds the item to the list.
+     * @param bikeItem
+     * @return
+     */
+    public String checkPart(BikePart bikeItem){
+        int counter = 0;
+        String listContains = "false";
+        while (counter < partsList.size()) {
+            if (partsList.get(counter).getPartNum() == bikeItem.getPartNum()){
+                listContains = "true";
+                int addNum = bikeItem.getQuantity(); //get qty of new part
+                int addNum2 = partsList.get(counter).getQuantity();
+                int finalNum = addNum + addNum2;
+                partsList.get(counter).setQuantity(finalNum);
+                partsList.get(counter).setPrice(bikeItem.getPrice());
+                partsList.get(counter).setSalesPrice(bikeItem.getSalesPrice());
+                partsList.get(counter).setOnSale(bikeItem.isOnSale());
+            }
+            ++counter;
+        }
+        return listContains;
+    }
+
+    /**
+     * This method prints the requested BikePart item to the screen.
+     * @param bikeItem
+     */
+    public void displayPart(BikePart bikeItem){
+        String name = bikeItem.getPartName();
+        int num = bikeItem.getPartNum();
+        double price = 0.0;
+        if (bikeItem.isOnSale()){
+            price = bikeItem.getSalesPrice();
+        }
+        else {
+            price = bikeItem.getPrice();
+        }
+        int qty = bikeItem.getQuantity();
+
+        System.out.println("Part name: " + name + " " + "Part cost: " + price + " ");
+    }
+
+    /**
+     * This method displays part information whenever an item is sold.
+     * @param bikeItem
+     */
+    public void sellDisplayPart(BikePart bikeItem) {
+        String name = bikeItem.getPartName();
+        int num = bikeItem.getPartNum();
+        double price = 0.0;
+        LocalDateTime now = LocalDateTime.now();
+        if (bikeItem.isOnSale()) {
+            price = bikeItem.getSalesPrice();
+        } else {
+            price = bikeItem.getPrice();
+        }
+        int qty = bikeItem.getQuantity();
+
+        System.out.println("Part name: " + name + " " + "Part number: " + num + " " + "Price: " + price + "Parts Remaining: " + qty + " " + "Time Sold: " + now);
+    }
+
+    /**
+     * This method decrements the BikePart quantity field in partsList for the specified BikePart object.
+     * @param bikeItem
+     */
+    public void sellPart(BikePart bikeItem){
+        int qty = bikeItem.getQuantity();
+        bikeItem.setQuantity(qty - 1);
+    }
+
+    /**
+     * This method returns the inventory of parts.
+     * @return partsList
+     */
+    public ArrayList<BikePart> getInventory() {
+        return partsList;
+    }
+
+    /**
+     * This method prints out the parts list as a string.
+     */
+    public void print() {
+        int counter = 0;
+        while (counter < partsList.size()) {
+            System.out.println(partsList.get(counter).toString());
+            ++counter;
+        }
+    }
+
+}
